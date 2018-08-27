@@ -2,8 +2,9 @@ package hal
 
 import (
 	"fmt"
-	"github.com/danryan/env"
 	"strings"
+
+	"github.com/danryan/env"
 )
 
 // UserHasRole determines whether the Response's user has a given role
@@ -11,6 +12,7 @@ func UserHasRole(res *Response, role string) bool {
 	user := res.Envelope.User
 	for _, r := range user.Roles {
 		if r == role {
+			Logger.Debugf("UserHasRoles: User(%v) Role(%v)", user, role)
 			return true
 		}
 	}
@@ -99,6 +101,7 @@ func (a *Auth) UsersWithRole(role string) (users []User) {
 
 // AddRole adds a role to a User
 func (a *Auth) AddRole(user User, r string) error {
+	// We probably just need to check if the user is already an admin then let them add. This is dumb.
 	if r == "admin" {
 		return fmt.Errorf(`the "admin" role can only be defined by the HAL_AUTH_ADMIN environment variable`)
 	}
@@ -148,9 +151,15 @@ func (a *Auth) IsAdmin(user User) bool {
 	return false
 }
 
+/*
+# Auth Handlers
+#
+# These are auto-registered
+*/
 var addUserRoleHandler = &Handler{
 	Pattern: `(?i)@?(.+) (?:has)(?: the)? (["'\w: -_]+) (?:role)`,
 	Method:  RESPOND,
+	Usage:   "@<user> has the <role> role",
 	Run: func(res *Response) error {
 		name := strings.TrimSpace(res.Match[1])
 		role := strings.ToLower(res.Match[2])
@@ -177,6 +186,7 @@ var addUserRoleHandler = &Handler{
 var removeUserRoleHandler = &Handler{
 	Pattern: `(?i)@?(.+) (?:does(?:n't| not) have)(?: the)? (["'\w: -_]+) (role)`,
 	Method:  RESPOND,
+	Usage:   "@<user> doesn't have the <role> role",
 	Run: func(res *Response) error {
 		name := strings.TrimSpace(res.Match[1])
 		role := strings.ToLower(res.Match[2])
@@ -203,6 +213,7 @@ var removeUserRoleHandler = &Handler{
 var listUserRolesHandler = &Handler{
 	Pattern: `(?i)(?:what roles? does) @?(.+) (?:have)\??`,
 	Method:  RESPOND,
+	Usage:   "What roles does @<user> have?",
 	Run: func(res *Response) error {
 		name := res.Match[1]
 
@@ -222,13 +233,14 @@ var listUserRolesHandler = &Handler{
 			return res.Reply(name + " has no roles")
 		}
 
-		return res.Reply(fmt.Sprintf("%s has the following roles: %s", name, strings.Join(roles, ", ")))
+		return res.Reply("%s has the following roles: %s", name, strings.Join(roles, ", "))
 	},
 }
 
 var listAdminsHandler = &Handler{
 	Pattern: `who (?:has)(?: the)? admin role\??`,
 	Method:  RESPOND,
+	Usage:   "Who has the admin role?",
 	Run: func(res *Response) error {
 		admins := res.Robot.Auth.Admins()
 		names := make([]string, len(admins))

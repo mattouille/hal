@@ -2,14 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/danryan/hal"
-	_ "github.com/danryan/hal/adapter/irc"
-	_ "github.com/danryan/hal/adapter/shell"
-	_ "github.com/danryan/hal/adapter/slack"
-	_ "github.com/danryan/hal/adapter/test"
-	_ "github.com/danryan/hal/store/redis"
-	"github.com/davecgh/go-spew/spew"
 	"os"
+
+	"github.com/davecgh/go-spew/spew"
+	"github.com/mattouille/hal"
+	_ "github.com/mattouille/hal/adapter/shell"
+	_ "github.com/mattouille/hal/adapter/slack"
+	_ "github.com/mattouille/hal/store/redis"
 )
 
 var pingHandler = hal.Hear(`ping`, func(res *hal.Response) error {

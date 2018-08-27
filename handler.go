@@ -6,11 +6,16 @@ import (
 	"strings"
 )
 
+/*
+If you are using the Slack Adapter (or any adapter that overrides the name of the bot) then use the
+alias as whatever the bots name is so that the regex matcher works.
+*/
+
 var (
 	// RespondRegexp is used to determine whether a received message should be processed as a response
-	respondRegexp = fmt.Sprintf(`^(?:@?(?:%s|%s)[:,]?)\s+(?:(.+))`, Config.Alias, Config.Name)
+	respondRegexp = fmt.Sprintf(`^(?:<@?(?:%s|%s)>?)\s+(?:(.+))`, Config.Alias, Config.Name)
 	// RespondRegexpTemplate expands the RespondRegexp
-	respondRegexpTemplate = fmt.Sprintf(`^(?:@?(?:%s|%s)[:,]?)\s+(?:${1})`, Config.Alias, Config.Name)
+	respondRegexpTemplate = fmt.Sprintf(`^(?:<@?(?:%s|%s)>?)\s+(?:${1})`, Config.Alias, Config.Name)
 )
 
 // handler is an interface for objects to implement in order to respond to messages.
@@ -23,8 +28,10 @@ var Handlers = map[string]handler{}
 
 func handlerMatch(r *regexp.Regexp, text string) bool {
 	if !r.MatchString(text) {
+		Logger.Debugf("handler.handlerMatch: Handler did not match for text %s", text)
 		return false
 	}
+	Logger.Debugf("handler.handlerMatch: Handler matched.")
 	return true
 }
 
@@ -77,6 +84,7 @@ func (h *Handler) regexp() *regexp.Regexp {
 
 // Match func
 func (h *Handler) match(res *Response) bool {
+	Logger.Debugf("%v: %v", h.Method, h.Usage)
 	return handlerMatch(h.regexp(), res.Message.Text)
 }
 
@@ -100,6 +108,7 @@ func (h *FullHandler) Regexp() *regexp.Regexp {
 
 // Match func
 func (h *FullHandler) Match(res *Response) bool {
+	Logger.Debugf("%v: %v", h.handler.Method(), h.handler.Usage())
 	return handlerMatch(h.Regexp(), res.Message.Text)
 }
 

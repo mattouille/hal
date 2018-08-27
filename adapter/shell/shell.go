@@ -3,11 +3,12 @@ package shell
 import (
 	"bufio"
 	"fmt"
-	"github.com/danryan/hal"
 	"io"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/mattouille/hal"
 )
 
 func init() {

@@ -1,8 +1,6 @@
 package haltest
 
-import (
-	"github.com/danryan/hal"
-)
+import "github.com/mattouille/hal"
 
 type Robot struct {
 	hal.Robot
