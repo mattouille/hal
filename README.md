@@ -1,8 +1,15 @@
 # HAL
 
-This bot was originally adapted from [HAL](https://github.com/danryan/hal) which is no longer maintained. This project should be regarded as a WIP. HAL _was_ a multipurpose chatbot framework, however, it will be Slack only as we move forward.
+This bot was originally adapted from [HAL](https://github.com/danryan/hal) which is no longer maintained. This project should be regarded as a WIP.
 
-# Development instructions
+## Roadmap
+
+* Work on debug messaging
+* Sensible tests and coverage
+* Enhance documentation
+* Handlers are quit confusing for some reason
+
+## Development instructions
 
 1. `make all`
 2. Insert your slack token into `run.sh`

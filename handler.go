@@ -23,6 +23,14 @@ type handler interface {
 	Handle(res *Response) error
 }
 
+// Handler type
+type Handler struct {
+	Method  string
+	Pattern string
+	Usage   string
+	Run     func(res *Response) error
+}
+
 // Handlers is a map of registered handlers
 var Handlers = map[string]handler{}
 
@@ -52,14 +60,6 @@ func NewHandler(h interface{}) (handler, error) {
 	default:
 		return nil, fmt.Errorf("%v does not implement the handler interface", v)
 	}
-}
-
-// Handler type
-type Handler struct {
-	Method  string
-	Pattern string
-	Usage   string
-	Run     func(res *Response) error
 }
 
 // Handle func

@@ -9,7 +9,6 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"github.com/mattouille/hal"
 	"github.com/nlopes/slack"
-	irc "github.com/thoj/go-ircevent"
 )
 
 func init() {
@@ -25,9 +24,6 @@ type adapter struct {
 	channelMode    string
 	botname        string
 	responseMethod string
-	ircEnabled     bool
-	ircPassword    string
-	ircConnection  *irc.Connection
 	linkNames      int
 	rtm            *slack.RTM
 }
