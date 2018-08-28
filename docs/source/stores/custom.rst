@@ -19,7 +19,7 @@ you may need).
 
     import (
         "fmt"
-        "github.com/danryan/hal"
+        "github.com/mattouille/hal"
     )
 
 Next, we need to define a hook that will tell hal about the store and

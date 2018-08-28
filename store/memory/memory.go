@@ -2,7 +2,8 @@ package memory
 
 import (
 	"fmt"
-	"github.com/danryan/hal"
+
+	"github.com/mattouille/hal"
 )
 
 func init() {
@@ -19,6 +20,8 @@ func New(robot *hal.Robot) (hal.Store, error) {
 	s := &store{
 		data: map[string][]byte{},
 	}
+	// Set the healthcheck store status
+	hal.HealthStatus.StoreStatus = "connected"
 	s.SetRobot(robot)
 	return s, nil
 }

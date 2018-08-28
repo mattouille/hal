@@ -5,17 +5,10 @@ Slack
 Setup
 ~~~~~
 
-By default, Hal uses Slack's hubot integration. Currently Hal will
-listen in on all public channels, or a custom list of channels if ``HAL_SLACK_CHANNELS`` is declared. Private groups
+Currently Hal will listen in on all public channels, or a custom list of channels if ``HAL_SLACK_CHANNELS`` is declared. Private groups
 require the IRC gateway to work around a current limitation of the Slack
-API. See `Using IRC Gateway`_. The IRC gateway is the author's
-preferred method as your bot will automatically join all channels and
-groups to which it belongs, and removing Hal from a room is as simple as a
-``/kick hal`` command. Some advanced features like attachment uploading
-are not supported at this time.
-
-Start by adding the Hubot integration for your team (if you haven't done
-so).
+API. See `Using IRC Gateway`_. The RTM method is the best method to use.
+Some advanced features like attachment uploading are not supported at this time.
 
 Usage
 ~~~~~
@@ -23,7 +16,7 @@ Usage
 .. code:: go
 
     // blank import to register adapter
-    import _ "github.com/danryan/hal/adapter/slack"
+    import _ "github.com/mattouille/hal/adapter/slack"
 
 Configuration
 ~~~~~~~~~~~~~
@@ -34,25 +27,25 @@ Configuration
     HAL_SLACK_TOKEN=blah            # Your integration token
                                     # Default: none (required)
     HAL_SLACK_TEAM=acmeinc          # Your Slack subdomain (<team>.slack.com)
-                                    # Default: none (required)
+                                    # Default: none
     HAL_SLACK_BOTNAME=HAL           # The username Hal will send replies as
                                     # Default: HAL_NAME
-    HAL_SLACK_ICON_EMOJI=":poop:"   # The emoji shortcut used as the response icon
-                                    # Default: none
-    HAL_SLACK_CHANNELS=""           # not yet implemented
-    HAL_SLACK_CHANNEL_MODE=""        # 
+    HAL_SLACK_CHANNELS=""           # Channels to whitelist or blakcklist
+                                    # See HAL_SLACK_CHANNEL_MODE
+    HAL_SLACK_CHANNEL_MODE=""       #
     HAL_SLACK_LINK_NAMES=""         # not yet implemented
 
 ``HAL_SLACK_CHANNEL_MODE``
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Specify how to treat the list of channels in ``HAL_SLACK_CHANNELS```. Disabled if ``HAL_SLACK_CHANNELS`` is empty.
+Specify how to treat the list of channels in ``HAL_SLACK_CHANNELS```. Disabled if ``HAL_SLACK_CHANNELS`` is empty
+or ``HAL_SLACK_CHANNEL_MODE`` is ``none``.
 
-- **Options:** whitelist, blacklist
-- **Default:** whitelist
+- **Options:** whitelist, blacklist, none
+- **Default:** none
 - **Required:** false
 - **Example:** ``HAL_SLACK_CHANNEL_MODE=whitelist``
-- 
+-
 
 Using IRC Gateway
 ^^^^^^^^^^^^^^^^^
@@ -85,8 +78,8 @@ API or the IRC gateway.
                                     # Default: none (required)
     HAL_SLACK_RESPONSE_METHOD       # The method by which hal will respond to a message.
                                     # The irc option requires that the IRC gateway be configured
-                                    # Default: http
-                                    # Options: http, irc
+                                    # Default: rtm
+                                    # Options: rtm, irc
 
 For more information, please see the following link: \* `Connecting to
 Slack over IRC and

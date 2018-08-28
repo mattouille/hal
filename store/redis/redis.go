@@ -2,11 +2,12 @@ package redis
 
 import (
 	"fmt"
+	"net/url"
+
 	"github.com/danryan/env"
-	"github.com/danryan/hal"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/garyburd/redigo/redis"
-	"net/url"
+	"github.com/mattouille/hal"
 )
 
 var _ = spew.Sdump()

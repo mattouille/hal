@@ -1,8 +1,6 @@
 package handler
 
-import (
-	"github.com/danryan/hal"
-)
+import "github.com/mattouille/hal"
 
 type ping struct{}
 
@@ -19,7 +17,7 @@ func (h *ping) Pattern() string {
 }
 
 func (h *ping) Run(res *hal.Response) error {
-	return res.Send("PONG")
+	return res.Reply("PONG")
 }
 
 // Ping exports

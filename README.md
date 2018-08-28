@@ -1,39 +1,17 @@
 # HAL
 
-Hal is a chat bot framework written in the Go programming language.
+This bot was originally adapted from [HAL](https://github.com/danryan/hal) which is no longer maintained. This project should be regarded as a WIP.
 
-[![](http://img.shields.io/badge/everything-AWESOME-brightgreen.svg)](http://youtu.be/StTqXEQ2l-Y "Everything status: AWESOME")
+## Roadmap
 
-## Getting started
+* Work on debug messaging
+* Sensible tests and coverage
+* Enhance documentation
+* Handlers are quit confusing for some reason
 
-["Good morning, Dr. Chandra. This is HAL. I'm ready for my first lesson." ![](http://img.youtube.com/vi/nXgboDb9ucE/0.jpg)](https://www.youtube.com/watch?v=nXgboDb9ucE#t=180 "Good morning, Dr. Chandra. This is HAL. I'm ready for my first lesson.")
+## Development instructions
 
-Hal is Go all the way down, and uses standard packages wherever possible. For an idea of how you can use it, look at [a simple example](examples/simple/main.go), or [a more complex example](examples/complex/main.go). Please see below for additional resources.
-
-## Resources
-
-* [Project documentation](http://hal.readthedocs.org)
-* [API documentation](http://godoc.org/github.com/danryan/hal)
-* [Mailing list](https://groups.google.com/group/hal-bot)
-* [Bugs and feature requests](https://github.com/danryan/hal/issues)
-* IRC - ##hal on irc.freenode.net
-
-## Is it any good?
-
-[Probably not.](http://news.ycombinator.com/item?id=3067434)
-
-## License
-
-Copyright 2014 Applied Awesome LLC.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+1. `make all`
+2. Insert your slack token into `run.sh`
+3. `chmod a+x run.sh`
+4. `./run.sh`

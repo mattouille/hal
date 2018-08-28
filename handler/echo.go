@@ -1,10 +1,13 @@
 package handler
 
-import (
-	"github.com/danryan/hal"
-)
+import "github.com/mattouille/hal"
 
-// Echo is an example of a simple handler.
-var Echo = hal.Respond(`echo (.+)`, func(res *hal.Response) error {
-	return res.Reply(res.Match[1])
-})
+// Echo duplicates whatever the user tells it.
+var Echo = &hal.Handler{
+	Method:  hal.RESPOND,
+	Usage:   "@<bot> echo <something>",
+	Pattern: `echo (.+)`,
+	Run: func(res *hal.Response) error {
+		return res.Send(res.Match[1])
+	},
+}

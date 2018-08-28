@@ -1,8 +1,6 @@
 package hal_test
 
-import (
-	"github.com/danryan/hal"
-)
+import "github.com/mattouille/hal"
 
 func ExampleHandler_hear() {
 	res := hal.Response{
